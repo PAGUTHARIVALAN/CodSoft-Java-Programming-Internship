@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class AtmInterface {
     private BankAccount userAccount;
-    private Scanner scanner;
+    private Scanner sc;
 
     public AtmInterface(BankAccount userAccount) {
         this.userAccount = userAccount;
-        this.scanner = new Scanner(System.in);
+        this.sc = new Scanner(System.in);
     }
 
     public void startATM() {
@@ -34,7 +34,7 @@ public class AtmInterface {
     }
 
     private void displayMenu() {
-        System.out.println("=== ATM Menu ===");
+        System.out.println("=== ATM ===");
         System.out.println("1. Withdraw");
         System.out.println("2. Deposit");
         System.out.println("3. Check Balance");
@@ -45,36 +45,36 @@ public class AtmInterface {
     private int validateChoice() {
         while (true) {
             try {
-                int choice = Integer.parseInt(scanner.nextLine());
+                int choice = Integer.parseInt(sc.nextLine());
                 if (choice >= 1 && choice <= 4) {
                     return choice;
                 } else {
-                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    System.out.println("Invalid choice! Please enter a number between 1 and 4.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Invalid input! Please enter a number.");
             }
         }
     }
 
     private void withdraw() {
-        System.out.print("Enter the amount to withdraw (in dollars): $");
+        System.out.print("Enter the amount to withdraw :");
         double amount = validateAmount();
 
         if (userAccount.getBalance() >= amount) {
             userAccount.withdraw(amount);
-            System.out.println("Withdrawal successful. Current balance: $" + userAccount.getBalance());
+            System.out.println("Withdrawal successful!!. Current balance: " + userAccount.getBalance());
         } else {
             System.out.println("Insufficient balance. Withdrawal failed.");
         }
     }
 
     private void deposit() {
-        System.out.print("Enter the amount to deposit (in dollars): $");
+        System.out.print("Enter the amount to deposit : ");
         double amount = validateAmount();
 
         userAccount.deposit(amount);
-        System.out.println("Deposit successful. Current balance: $" + userAccount.getBalance());
+        System.out.println("Deposit successful. Current balance: " + userAccount.getBalance());
     }
 
     private void checkBalance() {
@@ -84,20 +84,20 @@ public class AtmInterface {
     private double validateAmount() {
         while (true) {
             try {
-                double amount = Double.parseDouble(scanner.nextLine());
+                double amount = Double.parseDouble(sc.nextLine());
                 if (amount > 0) {
                     return amount;
                 } else {
-                    System.out.println("Invalid amount. Please enter a positive number.");
+                    System.out.println("Invalid amount!. Please enter a positive number.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid amount.");
+                System.out.println("Invalid input!. Please enter a valid amount.");
             }
         }
     }
 
     public static void main(String[] args) {
-        BankAccount userAccount = new BankAccount(1000); // Initial balance $1000
+        BankAccount userAccount = new BankAccount(500); //Putting minimum balance as 500
         AtmInterface atm = new AtmInterface(userAccount);
         atm.startATM();
     }
@@ -115,10 +115,10 @@ class BankAccount {
     }
 
     public void withdraw(double amount) {
-        balance -= amount;
+        balance =balance - amount;
     }
 
     public void deposit(double amount) {
-        balance += amount;
+        balance =balance+amount;
     }
 }
